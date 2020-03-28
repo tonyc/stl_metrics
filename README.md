@@ -33,4 +33,6 @@ metrics.calculate_minimum_bounding_box()
 
 ## Running tests
 
-  * bundle exec rspec
+```bash
+bundle exec rspec
+```
