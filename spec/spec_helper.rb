@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "stl_metrics"
+require "ap"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

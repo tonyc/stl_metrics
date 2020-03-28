@@ -10,10 +10,23 @@ module StlMetrics
       @solid_name = nil
 
       @vertices = []
+
+      # callbacks for solid_name and triangle
+      @solid_block = nil
+      @triangle_block = nil
+    end
+
+    def on_solid_name(&block)
+      @solid_block = block
+    end
+
+    def on_triangle(&block)
+      @triangle_block = block
     end
 
     def parse!
       File.foreach(file_name) do |line|
+
         # This block of code could benefit from a state machine-type setup,
         # (particularly for error checking), but since we can assume the sample files
         # are always properly formed, we can take a simpler approach of just
@@ -21,7 +34,8 @@ module StlMetrics
 
         # only check for the solid name if we don't already have it
         if !solid_name && md = /\Asolid (\w+)/.match(line)
-          store_solid_name(md[1])
+          @solid_name = md[1]
+          @solid_block.call(@solid_name) if @solid_block
         elsif md = /vertex (.*)/.match(line)
           coordinates = md[1].split(" ").map(&:to_f)
 
@@ -39,14 +53,8 @@ module StlMetrics
       @vertices << vertex
     end
 
-    def store_solid_name(name)
-      @solid_name = name
-    end
-
     def finalize_triangle
-      # store the triangle
-      #puts "finalize_triangle: #{@vertices.inspect}"
-
+      @triangle_block.call(@vertices) if @triangle_block
       reset_vertices!
     end
 
