@@ -13,7 +13,7 @@ This is a basic .stl file parser and metrics calculator.
 
 ## Setup
 
-Check out the repo, and run `bundle install`
+Check out the repo, and run `bundle install`. If you get an error about bundler not being found, run `gem install bundler`
 
 ## Usage
 
