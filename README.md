@@ -21,13 +21,13 @@ bundle exec ruby display_metrics.rb data/Moon.stl
 ```ruby
 metrics = STLMetrics.parse_file("Moon.stl")
 
-metrics.total_triangles()
+metrics.total_facets()
 # => 116
 
-metrics.calculate_surface_area()
+metrics.surface_area()
 # => 14.235
 
-metrics.calculate_minimum_bounding_box()
+metrics.bounding_box()
 # => [[x,y,z] ... ] # list of 8 [x,y,z] coordinates
 ```
 

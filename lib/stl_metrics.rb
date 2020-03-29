@@ -30,9 +30,11 @@ module StlMetrics
 
     def initialize(options = {})
       @facet_store = options.fetch(:facet_store)
+
       @total_facets = nil
       @surface_area = nil
       @solid_name = nil
+      @bounding_box = nil
     end
 
     def total_facets
@@ -43,6 +45,10 @@ module StlMetrics
       @surface_area ||= compute_surface_area!
     end
 
+    def bounding_box
+      @bounding_box ||= compute_bounding_box!
+    end
+
     private
     attr_reader :facet_store
 
@@ -50,6 +56,11 @@ module StlMetrics
       facet_store.inject(0.0) do |total_area, facet|
         total_area += GeometryUtils.calculate_3d_surface_area(facet)
       end
+    end
+
+    def compute_bounding_box!
+      # 3d bounding box calculation here ;)
+      raise NotImplementedError
     end
   end
 
