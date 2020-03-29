@@ -59,7 +59,7 @@ It seemed that a good place for opportunity for modularity/replacement was to sp
 
 The main body of `StlMetrics::parse_file()` is fairly modular, and the `MemoryInefficientFacetStore` could easily be swapped out for another implementation, and likewise the use of `GeometryUtils` is in a fairly easy to change place. 
 
-One way to make it even more extensible is to allow `parse_file()` to take a reference to the facet store, and a "geometry calculator" class/module, where the implementations could easily be swapped out via the +options+ hash.
+One way to make it even more extensible is to allow `parse_file()` to take a reference to the facet store, and a "geometry calculator" class/module, where the implementations could easily be swapped out via the `options` hash.
 
 Late in the process, I realized the facet store didn't necessarily need to count the facets and accumulate the surface area as it went, so I changed it out, but perhaps the responsibility does indeed belong there. The advantage of this would be that the code could chop through the input file first, and then run the calculations as fast as possible without waiting for the callbacks (`on_solid_name`, `on_triangle`) to complete.
 
@@ -82,7 +82,7 @@ Another place for improvement would be a better facet store. Points shared betwe
 
 ## Benchmark results: C Ruby 2.5.1 vs JRuby 9.2.9.0
 
-* JRuby appears to be maybe 15% faster
+* JRuby appears to be maybe 15% faster out of the box
 * I didn't spend a lot of time tweaking JRuby. Lots of stuff could also be parallelized
 * See `benchmark.rb` for script
 
