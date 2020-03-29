@@ -73,7 +73,7 @@ Another place for improvement would be a better facet store. Points shared betwe
 ## Benchmark results: C Ruby 2.5.1 vs JRuby 9.2.9.0
 
 * JRuby appears to be maybe 15% faster
-
+* I didn't spend a lot of time tweaking JRuby. Lots of stuff could also be parallelized
 * See `benchmark.rb` for script
 
 ### C Ruby 2.5.1
