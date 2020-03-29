@@ -44,7 +44,7 @@ metrics.bounding_box()
 ## Running tests
 
 ```bash
-bundle exec rspec
+$ rake
 ```
 
 ## Thoughts & Ideas
