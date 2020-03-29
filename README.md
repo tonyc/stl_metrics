@@ -4,7 +4,7 @@ This is a basic .stl file parser and metrics calculator.
 
 ## Requirements
 
-* Ruby 2.6.5 (use asdf, rvm, or your favorite ruby version manager)
+* Ruby 2.6.x, although older Ruby 2.x's may work (use asdf, rvm, or your favorite ruby version manager)
 
 ## Install ruby with asdf:
 * https://asdf-vm.com/#/core-manage-asdf-vm
