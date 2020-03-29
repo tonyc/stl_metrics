@@ -2,6 +2,8 @@
 # and doesn't try to remove duplicate coordinates.
 # Thus, there's a lot of duplicated data in here.
 class MemoryInefficientFacetStore
+  include Enumerable
+
   attr_accessor :facets
 
   def initialize

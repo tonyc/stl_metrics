@@ -17,6 +17,10 @@ RSpec.describe StlMetrics do
     it "counts the facets" do
       expect(result.total_facets).to eq(2)
     end
+
+    it "calculates the total surface area" do
+      expect(result.surface_area).to be_within(0.001).of(1.4142)
+    end
   end
 
   describe "Moon.stl" do
@@ -34,6 +38,10 @@ RSpec.describe StlMetrics do
 
     it "counts the facets" do
       expect(result.total_facets).to eq(116)
+    end
+
+    it "calculates the surface area" do
+      expect(result.surface_area).to be_within(0.001).of(7.7726)
     end
   end
 

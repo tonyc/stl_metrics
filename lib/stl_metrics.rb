@@ -9,7 +9,7 @@ module StlMetrics
   def self.parse_file(file_name, options = {})
     parser = Parser.new(file_name, options)
 
-    facet_store = MemoryInefficientFacetStore.new()
+    facet_store = MemoryInefficientFacetStore.new
     metrics_result = MetricsResult.new(facet_store: facet_store)
 
     parser.on_solid_name do |name|
@@ -31,7 +31,7 @@ module StlMetrics
     def initialize(options = {})
       @facet_store = options.fetch(:facet_store)
       @total_facets = nil
-      @total_surface_area = nil
+      @surface_area = nil
       @solid_name = nil
     end
 
@@ -39,17 +39,16 @@ module StlMetrics
       @total_facets ||= facet_store.total_facets
     end
 
-    def calculate_3d_surface_area
-      @total_surface_area ||= compute_surface_area!
+    def surface_area
+      @surface_area ||= compute_surface_area!
     end
 
     private
     attr_reader :facet_store
 
     def compute_surface_area!
-      facet_store.inject(0) do |triangle, acc|
-        surface_area = GeometryUtils.calculate_3d_surface_area(triangle)
-        acc += surface_area
+      facet_store.inject(0.0) do |total_area, facet|
+        total_area += GeometryUtils.calculate_3d_surface_area(facet)
       end
     end
   end
