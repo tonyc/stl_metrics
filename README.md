@@ -71,3 +71,45 @@ I decided to punt on the 3d bounding box portion. This could easily go into Geom
 
 Another place for improvement would be a better facet store. Points shared between facets are currently duplicated, and memory usage could be reduced by keeping track of each point, and keeping a reference to that point, instead of just duplicating everything. (Hence the name MemoryInefficientFacetStore)
 
+
+## Benchmark results: C Ruby 2.5.1 vs JRuby 9.2.9.0
+
+* JRuby appears to be maybe 15% faster
+
+* See `benchmark.rb` for script
+
+### C Ruby 2.5.1
+
+```
+Benchmarking data/Moon.stl
+Warming up --------------------------------------
+        Parsing file   115.000  i/100ms
+Parse file with surface area
+                        74.000  i/100ms
+Calculating -------------------------------------
+        Parsing file      1.150k (± 1.0%) i/s -      5.750k in   5.000623s
+Parse file with surface area
+                        739.101  (± 1.6%) i/s -      3.700k in   5.007337s
+
+Comparison:
+        Parsing file:     1150.0 i/s
+```
+
+### JRUBY
+
+```
+Benchmarking data/Moon.stl
+Warming up --------------------------------------
+        Parsing file   109.000  i/100ms
+Parse file with surface area
+                        67.000  i/100ms
+Calculating -------------------------------------
+        Parsing file      1.427k (± 3.4%) i/s -      7.194k in   5.046766s
+Parse file with surface area
+                        832.035  (± 1.4%) i/s -      4.221k in   5.074193s
+
+Comparison:
+        Parsing file:     1427.2 i/s
+Parse file with surface area:      832.0 i/s - 1.72x  slower
+```
+
