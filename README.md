@@ -53,13 +53,13 @@ bundle exec rspec
 
 It seemed that a good place for opportunity for modularity/replacement was to split the code across a few concerns:
 
-* Parsing the text file (StlMetrics::Parser)
-* Storing the data for the facets/triangles somewhere (MemoryInefficientFacetStore)
-* Geometry-related calculations: surface area/bounding box/etc (GeometryUtils)
+* Parsing the text file (`StlMetrics::Parser`)
+* Storing the data for the facets/triangles somewhere (`MemoryInefficientFacetStore`)
+* Geometry-related calculations: surface area/bounding box/etc (`GeometryUtils`)
 
-The main body of StlMetrics::parse_file() is fairly modular, and the MemoryInefficientFacetStore could easily be swapped out for another implementation, and likewise the use of GeometryUtils is in a fairly easy to change place. 
+The main body of `StlMetrics::parse_file()` is fairly modular, and the `MemoryInefficientFacetStore` could easily be swapped out for another implementation, and likewise the use of `GeometryUtils` is in a fairly easy to change place. 
 
-One way to make it even more extensible is to allow parse_file() to take a reference to the facet store, and a "geometry calculator" class/module, where the implementations could easily be swapped out via the +options+ hash.
+One way to make it even more extensible is to allow `parse_file()` to take a reference to the facet store, and a "geometry calculator" class/module, where the implementations could easily be swapped out via the +options+ hash.
 
 Late in the process, I realized the facet store didn't necessarily need to count the facets and accumulate the surface area as it went, so I changed it out, but perhaps the responsibility does indeed belong there. The advantage of this would be that the code could chop through the input file first, and then run the calculations as fast as possible without waiting for the callbacks (`on_solid_name`, `on_triangle`) to complete.
 
@@ -76,9 +76,9 @@ slowed down parsing large files by about 100% :)
 
 Without doing any computation on area, etc, simply parsing a 317M file with ~1.2M triangles takes about 10-13 seconds. Needless to say, C Ruby is not necessarily known for speed :)
 
-I decided to punt on the 3d bounding box portion. This could easily go into GeometryUtils, or also be passed in to StlMetrics::parse_file() for modularity.
+I decided to punt on the 3d bounding box portion. This could easily go into `GeometryUtils`, or also be passed in to `StlMetrics::parse_file()` for modularity.
 
-Another place for improvement would be a better facet store. Points shared between facets are currently duplicated, and memory usage could be reduced by keeping track of each point, and keeping a reference to that point, instead of just duplicating everything. (Hence the name MemoryInefficientFacetStore)
+Another place for improvement would be a better facet store. Points shared between facets are currently duplicated, and memory usage could be reduced by keeping track of each point, and keeping a reference to that point, instead of just duplicating everything. (Hence the name `MemoryInefficientFacetStore`)
 
 ## Benchmark results: C Ruby 2.5.1 vs JRuby 9.2.9.0
 
