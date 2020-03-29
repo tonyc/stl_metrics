@@ -53,13 +53,12 @@ One way to make it even more extensible is to allow parse_file() to take a refer
 
 Late in the process, I realized the facet store didn't necessarily need to count the facets and accumulate the surface area as it went, so I changed it out, but perhaps the responsibility does indeed belong there. The advantage of this would be that the code could chop through the input file first, and then run the calculations as fast as possible without waiting for the callbacks (`on_solid_name`, `on_triangle`) to complete.
 
-
 ### Performance improvements
 
 * There are a lot of places for performance improvements. Reading the file could be faster, and perhaps trying to read all of the points into memory, and then running the calculation on them, would be faster.
-* C Ruby is also not known for being very fast on lots of calculations. This is a spot where the calculations (or the entire code) could be ported to something that would be better suited, perhaps C or Rust?
-* I'd like to get a simple benchmark script set up to test C Ruby vs JRuby - perhaps the JVM can help in this case.
-
+* C Ruby is also not known for being very fast on lots of calculations. This is a spot where the calculations (or the entire code) could be ported to something that would be better suited, perhaps JRuby, C, or Rust?
+* Triangle area calculation could also be parallelized, which I didn't do.
+* I did some simple benchmarking of C Ruby vs JRuby (see benchmark section, below)
 
 ### Other tidbits
 I experimented with parsing the coordinates to BigDecimal objects, in order to keep precision, but it
@@ -70,7 +69,6 @@ Without doing any computation on area, etc, simply parsing a 317M file with ~1.2
 I decided to punt on the 3d bounding box portion. This could easily go into GeometryUtils, or also be passed in to StlMetrics::parse_file() for modularity.
 
 Another place for improvement would be a better facet store. Points shared between facets are currently duplicated, and memory usage could be reduced by keeping track of each point, and keeping a reference to that point, instead of just duplicating everything. (Hence the name MemoryInefficientFacetStore)
-
 
 ## Benchmark results: C Ruby 2.5.1 vs JRuby 9.2.9.0
 
