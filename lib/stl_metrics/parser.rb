@@ -1,3 +1,5 @@
+require 'bigdecimal'
+
 module StlMetrics
   class Parser
     attr_reader :file_name
@@ -27,7 +29,7 @@ module StlMetrics
     def parse!
       File.foreach(file_name) do |line|
 
-        # This block of code could benefit from a state machine-type setup,
+        # This block of code could maybe benefit from a state machine-type setup,
         # (particularly for error checking), but since we can assume the sample files
         # are always properly formed, we can take a simpler approach of just
         # scanning the current line and building up vertices.
@@ -37,7 +39,9 @@ module StlMetrics
           @solid_name = md[1]
           @solid_block.call(@solid_name) if @solid_block
         elsif md = /vertex (.*)/.match(line)
+          md = /vertex (.*)/.match(line)
           coordinates = md[1].split(" ").map(&:to_f)
+          #coordinates = md[1].split(" ").map { |coord| BigDecimal(coord) }
 
           store_vertex(coordinates)
         elsif md = /endloop/.match(line)

@@ -27,6 +27,8 @@ module StlMetrics
 
   class MetricsResult
     attr_accessor :solid_name
+    attr_accessor :surface_area
+    attr_accessor :total_facets
 
     def initialize(options = {})
       @facet_store = options.fetch(:facet_store)
