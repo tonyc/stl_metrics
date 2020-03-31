@@ -76,6 +76,5 @@ class MemoryInefficientFacetStore
     [@min_z, @max_z]
   end
 
-
 end
 
