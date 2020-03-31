@@ -57,6 +57,7 @@ It seemed that a good place for opportunity for modularity/replacement was to sp
 * Storing the data for the facets/triangles somewhere (`MemoryInefficientFacetStore`)
 * Geometry-related calculations: surface area/bounding box/etc (`GeometryUtils`)
 * The bounding box calculation is part of the FacetStore, mainly out of convenience, but it should probably be a completely separate object that gets injected into the Facet store. This would then keep the implementation of the facet store separate from the calculation of the bounding box.
+* I'm not sure if the bounding box algorithm is correct, but gave me correct results after asking Clark what the expected bounding box was for the 2-triangle sample :)
 
 The main body of `StlMetrics::parse_file()` is fairly modular, and the `MemoryInefficientFacetStore` could easily be swapped out for another implementation, and likewise the use of `GeometryUtils` is in a fairly easy to change place. 
 
