@@ -8,4 +8,4 @@ result = StlMetrics.parse_file(filename)
 
 puts " Total facets: #{result.total_facets}"
 puts " Surface area: #{result.surface_area}"
-puts " Bounding box: (not implemented)"
+puts " Bounding box: #{result.bounding_box.inspect}"
