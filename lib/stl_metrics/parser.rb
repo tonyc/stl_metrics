@@ -43,7 +43,7 @@ module StlMetrics
           coordinates = md[1].split(" ").map(&:to_f)
           #coordinates = md[1].split(" ").map { |coord| BigDecimal(coord) }
 
-          store_vertex(coordinates)
+          cache_vertex(coordinates)
         elsif md = /endloop/.match(line)
           finalize_triangle
         else
@@ -53,7 +53,7 @@ module StlMetrics
     end
 
     private
-    def store_vertex(vertex)
+    def cache_vertex(vertex)
       @vertices << vertex
     end
 

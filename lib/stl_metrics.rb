@@ -7,6 +7,7 @@ module StlMetrics
 
   # parses a .stl file at +file_name+ and returns an instance of +StlMetrics::MetricsResult+
   def self.parse_file(file_name, options = {})
+
     parser = Parser.new(file_name, options)
 
     facet_store = MemoryInefficientFacetStore.new
@@ -24,6 +25,8 @@ module StlMetrics
 
     metrics_result
   end
+
+  protected
 
   class MetricsResult
     attr_accessor :solid_name
@@ -48,7 +51,7 @@ module StlMetrics
     end
 
     def bounding_box
-      @bounding_box ||= compute_bounding_box!
+      @bounding_box ||= facet_store.calculate_bounding_box!
     end
 
     private
@@ -58,11 +61,6 @@ module StlMetrics
       facet_store.inject(0.0) do |total_area, facet|
         total_area += GeometryUtils.calculate_3d_surface_area(facet)
       end
-    end
-
-    def compute_bounding_box!
-      # 3d bounding box calculation here ;)
-      raise NotImplementedError
     end
   end
 
